@@ -1,19 +1,33 @@
-import React from 'react'
+import { Todo } from '../../@type/todo.type'
+
 interface TaskListProps {
   doneTaskList?: boolean
+  todos: Todo[]
+  handleCheckbox: (id: any, done: any) => void
 }
 function TaskList(props: TaskListProps) {
-  const { doneTaskList } = props
+  const { doneTaskList, todos, handleCheckbox } = props
+
+  const onChangeCheckbox = (idTodo: any) => (e: any) => {
+    handleCheckbox(idTodo, e.target.checked)
+  }
+
   return (
     <>
-      <h2>List item</h2>
+      <h2>{doneTaskList ? 'hoàn thành' : 'chưa hoàn thành'}</h2>
       <ul>
-        <li>
-          <input type='checkbox' />
-          <span>name</span>
-          <button>sửa</button>
-          <button>xóa</button>
-        </li>
+        {todos.map((todo) => {
+          return (
+            <>
+              <li key={todo.id}>
+                <input type='checkbox' checked={todo.done} onChange={onChangeCheckbox(todo.id)} />
+                <span>{todo.name}</span>
+                <button>sửa</button>
+                <button>xóa</button>
+              </li>
+            </>
+          )
+        })}
       </ul>
     </>
   )
