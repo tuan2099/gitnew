@@ -4,9 +4,11 @@ interface TaskListProps {
   doneTaskList?: boolean
   todos: Todo[]
   handleCheckbox: (id: any, done: any) => void
+  startEditTodo: (id: any) => void
+  deleteTodo: (id: any) => void
 }
 function TaskList(props: TaskListProps) {
-  const { doneTaskList, todos, handleCheckbox } = props
+  const { doneTaskList, todos, handleCheckbox, startEditTodo, deleteTodo } = props
 
   const onChangeCheckbox = (idTodo: any) => (e: any) => {
     handleCheckbox(idTodo, e.target.checked)
@@ -22,8 +24,8 @@ function TaskList(props: TaskListProps) {
               <li key={todo.id}>
                 <input type='checkbox' checked={todo.done} onChange={onChangeCheckbox(todo.id)} />
                 <span>{todo.name}</span>
-                <button>sửa</button>
-                <button>xóa</button>
+                <button onClick={() => startEditTodo(todo.id)}>sửa</button>
+                <button onClick={() => deleteTodo(todo.id)}>xóa</button>
               </li>
             </>
           )
