@@ -1,4 +1,3 @@
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react'
 
 export interface Todo {
   name: string
