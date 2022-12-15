@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PostItem from '../postItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { Roostate } from '../../../../store'
-import { deletePost, startEdittingPost } from '../../blog.slice'
+import { Roostate, useAppDispatch } from '../../../../store'
+import { deletePost, getPostList, startEdittingPost } from '../../blog.slice'
 export default function PostList() {
   const postList = useSelector((state: Roostate) => state.Blog.postList)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const handleDelete = (postID: string) => dispatch(deletePost(postID))
   const handleStartEditing = (PostID: string) => {
     dispatch(startEdittingPost(PostID))
   }
+  useEffect(() => {
+    const promise = dispatch(getPostList())
+    return () => {
+      promise.abort()
+    }
+  }, [dispatch])
   return (
     <div className='bg-white py-6 sm:py-8 lg:py-12'>
       <div className='mx-auto max-w-screen-xl px-4 md:px-8'>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Post } from '../../../../@type/blog.type'
-import { Roostate } from '../../../../store'
+import { Roostate, useAppDispatch } from '../../../../store'
 import { addPost, cancelPost, finishUpdatePost } from '../../blog.slice'
 
 const initialState: Post = {
@@ -16,7 +16,7 @@ const initialState: Post = {
 function CretePost() {
   const [formData, setFormData] = useState<Post>(initialState)
   const editingPost = useSelector((state: Roostate) => state.Blog.editingPost)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     setFormData(editingPost || initialState)
@@ -27,8 +27,7 @@ function CretePost() {
     if (editingPost) {
       dispatch(finishUpdatePost(formData))
     } else {
-      const addId = { ...formData, id: new Date().toISOString() }
-      dispatch(addPost(addId))
+      dispatch(addPost(formData))
     }
     setFormData(initialState)
   }
