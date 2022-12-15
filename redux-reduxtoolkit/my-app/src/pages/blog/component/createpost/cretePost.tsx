@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Post } from '../../../../@type/blog.type'
 import { Roostate, useAppDispatch } from '../../../../store'
-import { addPost, cancelPost, finishUpdatePost } from '../../blog.slice'
+import { addPost, cancelPost, updatePost } from '../../blog.slice'
 
 const initialState: Post = {
   id: '',
@@ -25,7 +25,12 @@ function CretePost() {
   const handleSubmit = (e: any) => {
     e.preventDefault()
     if (editingPost) {
-      dispatch(finishUpdatePost(formData))
+      dispatch(
+        updatePost({
+          postID: editingPost.id,
+          body: formData
+        })
+      )
     } else {
       dispatch(addPost(formData))
     }

@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import PostItem from '../postItem'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Roostate, useAppDispatch } from '../../../../store'
 import { deletePost, getPostList, startEdittingPost } from '../../blog.slice'
+import Selecketon from '../Seleketon'
 export default function PostList() {
   const postList = useSelector((state: Roostate) => state.Blog.postList)
+  const loading = useSelector((state: Roostate) => state.Blog.loading)
   const dispatch = useAppDispatch()
   const handleDelete = (postID: string) => dispatch(deletePost(postID))
   const handleStartEditing = (PostID: string) => {
@@ -26,18 +28,25 @@ export default function PostList() {
           </p>
         </div>
         <div className='grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-2 xl:grid-cols-2 xl:gap-8'>
-          {postList.map((post) => {
-            return (
-              <>
-                <PostItem
-                  post={post}
-                  key={post.id}
-                  handleDelete={handleDelete}
-                  handleStartEditing={handleStartEditing}
-                />
-              </>
-            )
-          })}
+          {loading && (
+            <>
+              <Selecketon />
+            </>
+          )}
+
+          {!loading &&
+            postList.map((post) => {
+              return (
+                <>
+                  <PostItem
+                    post={post}
+                    key={post.id}
+                    handleDelete={handleDelete}
+                    handleStartEditing={handleStartEditing}
+                  />
+                </>
+              )
+            })}
         </div>
       </div>
     </div>

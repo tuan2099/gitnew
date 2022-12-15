@@ -2,10 +2,7 @@ import React from 'react'
 import { Post } from '../../../../@type/blog.type'
 interface PostItemType {
   post: Post
-  handleDelete: (postID: string) => {
-    payload: string
-    type: string
-  }
+  handleDelete: (postID: string) => void
   handleStartEditing: (PostID: string) => void
 }
 function PostItem({ post, handleDelete, handleStartEditing }: PostItemType) {
